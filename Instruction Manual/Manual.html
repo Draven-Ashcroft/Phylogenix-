@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EvoGen Mapper — User Manual</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #07080d;
+    --bg-card: #0f111a;
+    --bg-surface: #161829;
+    --border: #1c1d2e;
+    --text-primary: #e2e8f0;
+    --text-secondary: #8a93b8;
+    --text-dim: #5a5f82;
+    --accent-cyan: #22d3ee;
+    --accent-green: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-violet: #8b5cf6;
+    --accent-blue: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    background: linear-gradient(180deg, #0a0e1a 0%, var(--bg-deep) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem; font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-logo span { color: var(--text-primary); font-weight: 400; }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-secondary);
+    max-width: 520px; margin: 0 auto 2rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 500;
+    color: var(--accent-cyan);
+    background: rgba(34,211,238,0.08);
+    border: 1px solid rgba(34,211,238,0.2);
+    padding: 0.3rem 0.8rem; border-radius: 4px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* ── LAYOUT ── */
+  .manual-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 3.5rem;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--bg-deep);
+    background: var(--accent-cyan);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ── STEP CARDS ── */
+  .step-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 14px;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: rgba(34,211,238,0.25); }
+
+  .step-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-surface);
+    border-radius: 8px;
+  }
+  .step-body { flex: 1; }
+  .step-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── KEY ELEMENT ── */
+  kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-cyan);
+    white-space: nowrap;
+  }
+
+  /* ── TOOLBAR MAP ── */
+  .toolbar-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .tool-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tool-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .tool-info { flex: 1; }
+  .tool-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tool-desc {
+    font-size: 0.8rem; color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* ── WORKFLOW FLOW ── */
+  .workflow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 24px;
+  }
+  .workflow::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 20px; bottom: 20px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-green));
+    border-radius: 1px;
+  }
+  .wf-step {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 1rem 0;
+    position: relative;
+  }
+  .wf-dot {
+    width: 10px; height: 10px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+    position: relative;
+    left: -19px;
+    z-index: 1;
+    box-shadow: 0 0 8px rgba(34,211,238,0.4);
+  }
+  .wf-step:last-child .wf-dot { background: var(--accent-green); box-shadow: 0 0 8px rgba(16,185,129,0.4); }
+  .wf-content { flex: 1; margin-left: -8px; }
+  .wf-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .wf-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+  /* ── CAUTION BOX ── */
+  .caution-box {
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    display: flex; gap: 12px;
+    align-items: flex-start;
+  }
+  .caution-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .caution-text { font-size: 0.88rem; color: #d4a44a; line-height: 1.6; }
+  .caution-text strong { color: #f59e0b; }
+
+  .tip-box {
+    background: rgba(34,211,238,0.05);
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    display: flex; gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .tip-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+  .tip-text strong { color: var(--accent-cyan); }
+
+  /* ── TABLE ── */
+  .shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+  }
+  .shortcut-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .shortcut-table td {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid rgba(28,29,46,0.5);
+  }
+  .shortcut-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  .manual-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+  .manual-footer a { color: var(--accent-cyan); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { padding: 3rem 1.25rem 2rem; }
+    .hero-logo { font-size: 2rem; }
+    .hero-sub { font-size: 0.95rem; }
+    .manual-container { padding: 1.5rem 1rem 3rem; }
+    .section-title { font-size: 1.15rem; }
+    .toolbar-map { grid-template-columns: 1fr; }
+    .step { flex-direction: column; }
+    .step-icon { width: 36px; height: 36px; font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<header class="hero">
+  <div class="hero-badge">User Manual v1.0</div>
+  <h1 class="hero-logo">EvoGen <span>— Mapper</span></h1>
+  <p class="hero-sub">Interactive cladogram simulation for mapping vertebrate evolutionary lineages with matrix precision.</p>
+</header>
+
+<div class="manual-container">
+
+<!-- ═══════ 1. GETTING STARTED ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2 class="section-title">Getting Started</h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-icon">📂</div>
+      <div class="step-body">
+        <div class="step-label">Open the File</div>
+        <div class="step-desc">Double-click the <kbd>.html</kbd> file to open it in any modern browser (Chrome, Edge, Brave, Firefox). No server or installation needed — it runs completely offline.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🧬</div>
+      <div class="step-body">
+        <div class="step-label">Choose a Clade</div>
+        <div class="step-desc">The tab bar at the top shows available clades — <kbd>Sauropsida Clade</kbd> and <kbd>Synapsida Clade</kbd>. Click a tab to switch between the two evolutionary lineages. Both share the same geological timeline.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🔍</div>
+      <div class="step-body">
+        <div class="step-label">Search Organisms</div>
+        <div class="step-desc">Use the search bar at the top to quickly find any organism across both clades. Type a name and the matching node will be highlighted on the canvas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ 2. NAVIGATION CONTROLS ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <h2 class="section-title">Navigation Controls</h2>
+  </div>
+  <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">The control bar sits at the bottom-left of the cladogram canvas. Toggle it using the compass icon.</p>
+  <div class="toolbar-map">
+    <div class="tool-item">
+      <div class="tool-icon">🔒</div>
+      <div class="tool-info">
+        <div class="tool-name">Lock / Unlock</div>
+        <div class="tool-desc">Toggle pan & zoom on/off</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon">🔍+</div>
+      <div class="tool-info">
+        <div class="tool-name">Zoom In</div>
+        <div class="tool-desc">Magnify the cladogram</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon">🔍−</div>
+      <div class="tool-info">
+        <div class="tool-name">Zoom Out</div>
+        <div class="tool-desc">View the full tree</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-info">
+        <div class="tool-name">Reset View</div>
+        <div class="tool-desc">Return to default zoom & position</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon">◀▲▼▶</div>
+      <div class="tool-info">
+        <div class="tool-name">Arrow Pad</div>
+        <div class="tool-desc">Pan the canvas in any direction</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon">🧭</div>
+      <div class="tool-info">
+        <div class="tool-name">Toggle Controls</div>
+        <div class="tool-desc">Show or hide the control bar</div>
+      </div>
+    </div>
+  </div>
+  <div class="tip-box" style="margin-top: 1rem;">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text"><strong>Tip:</strong> Unlock pan/zoom first (click the lock icon), then use mouse wheel to zoom and click-drag to pan. On touch devices, pinch to zoom and swipe to pan.</div>
+  </div>
+</div>
+
+<!-- ═══════ 3. PROFILE CARDS ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <h2 class="section-title">Viewing Profile Cards</h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-icon">👆</div>
+      <div class="step-body">
+        <div class="step-label">Select a Node</div>
+        <div class="step-desc">Click on any organism node (the coloured circles) on the cladogram to select it. The node name appears in the bottom panel.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🪪</div>
+      <div class="step-body">
+        <div class="step-label">Open Profile Card</div>
+        <div class="step-desc">Click the <kbd>PROFILE CARD</kbd> button in the top-right to view the selected organism's detailed card. The card shows scientific name, image, chrono horizon, ancestor, diet, habitat, common name, and distinguishing characters.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">⬅️</div>
+      <div class="step-body">
+        <div class="step-label">Return to Cladogram</div>
+        <div class="step-desc">Click <kbd>← BACK</kbd> at the top of the profile card to return to the cladogram view. You can also click any clade tab to return.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ 4. PROFILE CARD ANATOMY ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2 class="section-title">Profile Card — Field Guide</h2>
+  </div>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Field</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Scientific Name</td><td>Binomial nomenclature or clade name of the organism</td></tr>
+      <tr><td>Taxonomic Classification</td><td>Hierarchical position — Clade, Order, Family</td></tr>
+      <tr><td>Status</td><td>🟢 Living or ❌ Extinct — with extinction date if applicable</td></tr>
+      <tr><td>Image</td><td>Representative specimen — real photograph or fossil-based AI reconstruction</td></tr>
+      <tr><td>Chrono Horizon</td><td>Timeline bar showing when the organism arose (green) and went extinct (red) or Present if living</td></tr>
+      <tr><td>Ancestor</td><td>Auto-computed from the cladogram tree structure — shows the parent node</td></tr>
+      <tr><td>Diet</td><td>Feeding ecology — Carnivore, Herbivore, Omnivore, Insectivore, Piscivore etc.</td></tr>
+      <tr><td>Common Name</td><td>Everyday name — e.g. "Dinosaurs", "Birds", "Turtles"</td></tr>
+      <tr><td>Habitat</td><td>Ecological niche — Terrestrial, Aquatic, Marine, Aerial etc.</td></tr>
+      <tr><td>Distinguishing Characters</td><td>Key morphological or behavioural features that define this group</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════ 5. EDITING (DEV MODE) ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2 class="section-title">Editing Profile Cards</h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-icon">✏️</div>
+      <div class="step-body">
+        <div class="step-label">Enter Edit Mode</div>
+        <div class="step-desc">With a profile card open, click the <kbd>EDIT</kbd> button. All fields become editable — click on any field to type or modify its content.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🖼️</div>
+      <div class="step-body">
+        <div class="step-label">Set Profile Image</div>
+        <div class="step-desc">In edit mode, the image URL input appears below the image. Enter the Supabase path (e.g. <kbd>Dinosauria/Trex.webp</kbd>) and click <kbd>SET</kbd>. Images are hosted on Supabase for reliable loading.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">💾</div>
+      <div class="step-body">
+        <div class="step-label">Save Changes</div>
+        <div class="step-desc">Click <kbd>DONE EDITING</kbd> to save your changes. All modifications are saved to the in-memory data — remember to export a snapshot to preserve them permanently.</div>
+      </div>
+    </div>
+  </div>
+  <div class="caution-box">
+    <div class="caution-icon">⚠️</div>
+    <div class="caution-text"><strong>Important:</strong> Edits are saved in browser memory only. If you close the tab without exporting a snapshot, all changes are lost. A browser warning will appear, but always export after editing.</div>
+  </div>
+</div>
+
+<!-- ═══════ 6. EVOLUTION TRACK ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <h2 class="section-title">Evolution Track</h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-icon">📊</div>
+      <div class="step-body">
+        <div class="step-label">Geological Timeline</div>
+        <div class="step-desc">The horizontal axis represents geological time in Millions of Years Ago (Mya) — from the Late Carboniferous (315 Mya) to Present (0 Mya). Period labels (Triassic, Jurassic, Cretaceous etc.) are displayed along the timeline.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🌿</div>
+      <div class="step-body">
+        <div class="step-label">Reading the Tree</div>
+        <div class="step-desc">Each node represents an organism or clade. Branches connect ancestors to descendants. The horizontal position shows when the group arose. Living groups (🟢) have branches extending to Present. Extinct groups (†) have branches that stop at their extinction point.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🔀</div>
+      <div class="step-body">
+        <div class="step-label">Dual Clade View</div>
+        <div class="step-desc">Switch between <kbd>Sauropsida</kbd> (reptiles and birds) and <kbd>Synapsida</kbd> (mammals) clades using the tab buttons. Both share the common ancestor "Early Amniotes" at the root.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ 7. EXPORT & SAVE ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <h2 class="section-title">Exporting & Saving Your Work</h2>
+  </div>
+  <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Every export creates a complete, self-contained HTML file with all your data baked in. Each snapshot is a permanent save point.</p>
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-dot"></div>
+      <div class="wf-content">
+        <div class="wf-title">Finish Editing</div>
+        <div class="wf-desc">Click <kbd>DONE EDITING</kbd> if you're in edit mode. Ensure all changes are saved.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-dot"></div>
+      <div class="wf-content">
+        <div class="wf-title">Close Profile Card</div>
+        <div class="wf-desc">Click <kbd>← BACK</kbd> to return to the cladogram view. Close any open profile tabs.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-dot"></div>
+      <div class="wf-content">
+        <div class="wf-title">Lock Controls</div>
+        <div class="wf-desc">Make sure pan/zoom is locked (lock icon should show locked state).</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-dot"></div>
+      <div class="wf-content">
+        <div class="wf-title">Export Snapshot</div>
+        <div class="wf-desc">Click <kbd>EXPORT HTML SNAPSHOT</kbd> in the control panel. A new <kbd>.html</kbd> file is downloaded — this is your saved version.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-dot"></div>
+      <div class="wf-content">
+        <div class="wf-title">Verify</div>
+        <div class="wf-desc">Open the exported file in a new tab to confirm all data, images, and node positions are preserved correctly.</div>
+      </div>
+    </div>
+  </div>
+  <div class="caution-box">
+    <div class="caution-icon">⚠️</div>
+    <div class="caution-text"><strong>Save often:</strong> Export a snapshot after every 2–3 nodes you fill. Each snapshot is a version checkpoint — if anything goes wrong, you can always go back to the previous one.</div>
+  </div>
+</div>
+
+<!-- ═══════ 8. DEV MODE (ADVANCED) ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">8</div>
+    <h2 class="section-title">Developer Mode (Advanced)</h2>
+  </div>
+  <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">For advanced editing of the cladogram structure. Long-press the gear icon (⚙️) for 2 seconds to activate.</p>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-icon">⚙️</div>
+      <div class="step-body">
+        <div class="step-label">Activate Dev Mode</div>
+        <div class="step-desc">Long-press the gear icon in the top-right. The gear glows cyan when active. The Developer Panel opens on the left with the full JSON data matrix.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🔧</div>
+      <div class="step-body">
+        <div class="step-label">JSON Data Matrix</div>
+        <div class="step-desc">View and edit the raw node/edge data. You can modify node positions (x, y), labels, MYA values, and profile data. Click <kbd>APPLY CHANGES</kbd> to save (a confirmation dialog will appear).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🌱</div>
+      <div class="step-body">
+        <div class="step-label">Spawn Mode</div>
+        <div class="step-desc">Click the sprout icon to enter Spawn Mode for adding new nodes and edges to the cladogram. Click on existing nodes to branch from them.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">↩️</div>
+      <div class="step-body">
+        <div class="step-label">Undo / Redo</div>
+        <div class="step-desc">Use <kbd>Ctrl+Z</kbd> to undo and <kbd>Ctrl+Y</kbd> to redo structural changes. Works across both clades.</div>
+      </div>
+    </div>
+  </div>
+  <div class="caution-box">
+    <div class="caution-icon">⚠️</div>
+    <div class="caution-text"><strong>Caution:</strong> Developer Mode gives full access to the data structure. Incorrect JSON edits can break the cladogram. Always export a snapshot before making structural changes.</div>
+  </div>
+</div>
+
+<!-- ═══════ 9. KEYBOARD SHORTCUTS ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">9</div>
+    <h2 class="section-title">Keyboard Shortcuts</h2>
+  </div>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>Ctrl + Z</kbd></td><td>Undo last action</td></tr>
+      <tr><td><kbd>Ctrl + Y</kbd></td><td>Redo last undone action</td></tr>
+      <tr><td><kbd>Scroll Wheel</kbd></td><td>Zoom in / out (when unlocked)</td></tr>
+      <tr><td><kbd>Click + Drag</kbd></td><td>Pan the canvas (when unlocked)</td></tr>
+      <tr><td><kbd>Click Node</kbd></td><td>Select organism node</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════ 10. TROUBLESHOOTING ═══════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <h2 class="section-title">Troubleshooting</h2>
+  </div>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Problem</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Image not loading</td><td>Check the Supabase path is correct. Ensure you have internet connectivity — images are hosted externally.</td></tr>
+      <tr><td>Can't pan or zoom</td><td>Click the lock icon to unlock pan/zoom first. The lock must be in the unlocked state.</td></tr>
+      <tr><td>Profile card shows zoom controls</td><td>This shouldn't happen in the latest version. If it does, close the profile card and reopen it.</td></tr>
+      <tr><td>Text cropped in diet/habitat fields</td><td>Fields auto-expand in the latest version. If cropped, you may be on an older snapshot — re-export from the latest base file.</td></tr>
+      <tr><td>Lost my edits</td><td>If you didn't export before closing, the data is lost. Always export snapshots after editing. Open your most recent snapshot to continue.</td></tr>
+      <tr><td>Node label clipped at edge</td><td>Adjust the node's Label X/Y Offset in Spawn Mode, or pan the canvas slightly.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="manual-footer">
+  <p>EvoGen Mapper — Built by <strong>Pottem Sai Prasad</strong></p>
+  <p style="margin-top: 4px;">M.Sc. Agricultural Entomology | NET Qualified (ASRB 2024)</p>
+</footer>
+
+</div>
+</body>
+</html>
