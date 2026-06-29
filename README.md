@@ -1,91 +1,92 @@
-<img src="Assets/Banner.png" width="100%" alt="Phylogenix Banner">
+<p align="center">
+  <img src="Assets/Banner.png" alt="Phylogenix Banner" width="100%">
+</p>
 
 # 🌳 Phylogenix
 
-• Explore Evolution  • Trace Lineages • Discover Connections
+<p align="center">
+
+### Evolutionary Cladogram Visualizer
+
+Interactive visualization of evolutionary relationships through dynamic cladograms, geological timelines, and organism profiles.
+
+</p>
+
 ---
-## 🧬 What is Phylogenix?
 
-Phylogenix is an interactive modular cladogram platform that helps users explore evolutionary relationships, trace common ancestry, identify closest relatives, and visualize life's history through geological time.
+## 📖 Overview
 
-Each organism includes a dedicated profile card containing key biological and taxonomic information.
-
-Designed for education, research, and science communication.
+**Phylogenix** is an open-source educational platform for exploring evolutionary biology through interactive cladograms. It enables users to trace common ancestry, discover phylogenetic relationships, and visualize the history of life using scientifically organized taxonomic data.
 
 ---
 
 ## ✨ Features
 
-- 🌳 Interactive phylogenetic cladogram
-- 🔍 Smart taxon search and navigation
+- 🌳 Interactive evolutionary cladogram
 - 📅 Geological timeline integration
-- 🧬 Detailed organism profile cards
-- 🖼️ Organism image support
-- 📖 Taxonomic classification viewer
+- 🧬 Organism profile cards
+- 🔍 Smart search and navigation
 - ↔️ Pan and zoom controls
-- 🧭 Navigator tool for large trees
-- ⚙️ Developer Mode
-- ➕ Spawn Mode
-- ↩️ Undo / Redo functionality
+- 📱 Responsive, browser-based interface
 - 💾 Export as standalone HTML
-- 📱 Responsive design
 
 ---
 
-## 🎓 Educational Applications
+## 🎓 Built For
 
 - Evolutionary Biology
-- Paleontology
 - Zoology
 - Taxonomy & Systematics
-- Museum Education
-- Classroom Demonstrations
+- Paleontology
+- Science Education
 - Research Visualization
 
 ---
 
-## ⚠️ Important Notes
+## 🛠️ Technologies
 
-### Image Loading
-
-Images and media assets require a configured backend server.
-
-Without a backend connection, the cladogram, timeline, search, and profile systems will continue to function normally, but organism images may not load.
-
-### Advanced Tools Warning
-
-The **Developer Mode (⚙️)** and **Spawn Mode (➕)** tools are intended for advanced users.
-
-Avoid clicking, long-pressing, or modifying these controls unless you understand the underlying cladogram structure and data relationships.
-
-Improper use may alter lineage connections, disrupt tree organization, or affect project data.
-
-For deployment assistance or backend configuration, please contact the author.
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- HTML5 Canvas API
 
 ---
 
-## 👨‍🔬 Author
+## 📜 License
 
-**Draven Ashcroft**  
-*M.Sc. (Agricultural Entomology)*  
-*ASRB-NET Qualified*
+Licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
+
+---
+
+## 👨‍🏫 Author
+
+**Draven Ashcroft**
+
+**M.Sc. Agricultural Entomology**  
+**ASRB–NET Qualified**  
+**DIPS Chain of Institutions, Tanda**
 
 ---
 
 ## 🙏 Acknowledgements
 
-This project was conceptualized, designed, and directed by the author.
+This project was independently conceived, designed, and developed by the author. Modern AI tools and cloud services accelerated development, debugging, and deployment.
 
-AI-assisted development tools were used for coding, debugging, optimization, and documentation support:
+Special thanks to:
 
-- 🤖 Claude
-- 💡 OpenAI
-- 🌙 Moonshot AI
+- **OpenAI (ChatGPT)** — scientific review, debugging, implementation, and documentation
+- **Anthropic Claude** — implementation assistance and optimization
+- **Google Gemini** — concept exploration and idea refinement
+- **Moonshot AI** — debugging and prototype refinement
+- **DeepSeek** — early drafts and experimentation
+- **Supabase** — backend infrastructure, image hosting, URL management, and cloud storage
 
 ---
 
-## 📄 License
+<p align="center">
 
-**GPL-3.0**
+## 🌳 Phylogenix
 
-Free to use, modify, and distribute under the terms of the GNU General Public License v3.0.
+### *Tracing the Evolutionary Tree of Life.*
+
+</p>
